@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script type="text/javascript">
+var dizionario=new Array("ACQUA", "AMICO", "AMORE", "ANIMO", "ANSIA", "ASINO", "ATRIO", "BACIO",
+"BARCA", "BOSCO", "CALDO", "CAMPO", "CANNE", "CARTA", "CERVO", "CIELO",
+"CITTA", "COLLE", "CORSO", "CREMA", "DANZA", "DOLCE", "DONNA", "FESTA",
+"FIORE", "FIUME", "FOGLIA", "FONDO", "FORNO", "FORZA", "FUOCO", "GATTO",
+"GIOCO", "GRANO", "GUSTO", "ISOLA", "LATTE", "LEGNO", "LIBRO", "MAGIA",
+"MAMMA", "MONTE", "NOTTE", "PADRE", "PANNA", "PARCO", "PASTO", "PERLA",
+"PIETRA", "PIZZA", "POLPO", "PONTE", "PORTA", "PRATO", "PROVA", "PUNTO",
+"QUOTA", "RATTO", "REGNO", "RESTO", "RICCO", "ROBOT", "ROCCA", "ROSSO",
+"RUOTA", "SACCO", "SALTO", "SANTO", "SCALA", "SCENA", "SOGNO", "SPADA",
+"STARE", "STELLA", "STORIA", "TASSA", "TEMPO", "TERRA", "TESTA", "TIGRE",
+"TORRE", "TRENO", "TRONO", "VALLE", "VERDE", "VETRO", "VOLPE", "ZEBRA",
+"ZERO", "ZINCO", "ZOPPO", "ZUCCA");
+
+var word= dizionario[Math.floor(Math.random() * dizionario.length)];
+var array_caselle=new Array(25);
+var i=0;
+var inizio=0;
+var tentativi=5;
+
+function genera_caselle()
+{   
+    if(i<25)
+    {
+    for(k=i+5;i<k;i++)
+        {
+        array_caselle[i]=document.createElement("input");
+        array_caselle[i].classList.add("casella");
+        container.appendChild(array_caselle[i]);
+
+        }
+    }
+    else   
+        alert("gioco finito");
+    
+}
+var reinserire;
+var indice_word;
+var corretta;
+var i_word=0;
+var esatta=0;
+function conferma()
+{
+    document.body.addEventListener("keydown", function(event){
+        if(event.key=="Enter")
+        {   reinserire=0;
+            corretta=0;
+            for(k=i,inizio=i-5;inizio<k;inizio++)
+            {
+                if(array_caselle[inizio].value==" ")
+                reinserire++;
+            }
+            if(reinserire)
+                alert("inserire la parola corretta");
+            else
+            {
+                for(indice_word=0,k=i,inizio=i-5;inizio<k;inizio++,indice_word++)
+                    {corretta=0;
+                        if(array_caselle[inizio].value.toUpperCase()==word[indice_word])
+                            {
+                                array_caselle[inizio].classList.add("verde");
+                                esatta++;
+                                corretta++;
+                            }
+                        else
+                        {
+                            
+                            for(i_word=0;i_word<5;i_word++)
+                            {
+                                if((array_caselle[inizio].value.toUpperCase()==word[i_word]))
+                                {
+                                    array_caselle[inizio].classList.add("giallo");
+                                    corretta++;
+                                   
+                                    
+
+                                }
+                                
+                                
+
+                           
+                            }
+                            
+                        }
+                        if(!corretta)
+                        {
+                            array_caselle[inizio].classList.add("rosso");
+                            tentativi++;
+                            
+                        }
+                    }
+                   if(esatta!=5)
+                    genera_caselle();
+               
+
+
+
+
+
+
+        }
+    }});
+}
+
+
+</script>
+<style>
+#container{
+    margin-top:3rem;
+    display: grid;
+    grid-template-columns: repeat(5, 5rem);
+    justify-content: center;
+    width:100%;
+    height:100vh;
+}
+.casella{
+    width:5rem;
+    height:5rem;
+    border: 1px solid black;
+    font-size:20pt;
+}
+.verde{
+    background-color: green;
+}
+.rosso{
+    background-color: red;
+}
+.giallo{
+    background-color: yellow;
+}
+</style>
+<body>
+<div id="container"></div>
+<script type="text/javascript">
+var container=document.getElementById("container");
+
+genera_caselle();
+conferma();
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>
